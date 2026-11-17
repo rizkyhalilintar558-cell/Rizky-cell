@@ -1,0 +1,793 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#0B1026">
+<link rel="icon" type="image/svg+xml" href="https://uploads.onecompiler.io/4525e2h7x/459baz4zd/Logo%20RizkyCell_%20Solusi%20Lengkap%20HP.png">
+<title>RizkyCell – HP Baru, HP Second & Servis</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+  :root{--ink:#F4F6FF;--mut:rgba(244,246,255,.68);--glass:rgba(255,255,255,.09);--edge:rgba(255,255,255,.18)}
+  html{background:#0B1026;scroll-behavior:smooth;scroll-padding-top:96px}
+  body{font-family:'Plus Jakarta Sans',system-ui,sans-serif;color:var(--ink);min-height:100vh;-webkit-font-smoothing:antialiased}
+  .font-head{font-family:Sora,system-ui,sans-serif}
+  :focus-visible{outline:2px solid #67E8F9;outline-offset:2px}
+
+  /* aurora backdrop: the glass needs something colourful to blur */
+  .blobs{position:fixed;inset:0;z-index:-1;overflow:hidden;background:#0B1026}
+  .blobs i{position:absolute;border-radius:50%;filter:blur(55px);opacity:.38;will-change:transform}
+  .blobs .b1{width:420px;height:420px;background:#7C3AED;top:-140px;left:-120px}
+  .blobs .b2{width:380px;height:380px;background:#06B6D4;top:32%;right:-140px}
+  .blobs .b3{width:400px;height:400px;background:#EC4899;bottom:-200px;left:28%;opacity:.28}
+  @keyframes drift{to{transform:translate(60px,40px) scale(1.12)}}
+  @keyframes float{0%,100%{transform:rotate(8deg) translateY(0)}50%{transform:rotate(8deg) translateY(-14px)}}
+  @keyframes nav-enter{from{opacity:0;transform:translate(-50%,24px)}to{opacity:1;transform:translate(-50%,0)}}
+  @keyframes nav-pop{0%{transform:translateY(0) scale(.88)}65%{transform:translateY(-7px) scale(1.08)}100%{transform:translateY(-4px) scale(1)}}
+  .bottom-nav{position:fixed;z-index:35;left:50%;bottom:max(14px,env(safe-area-inset-bottom));transform:translateX(-50%);width:min(680px,calc(100% - 28px));padding:10px 12px 8px;border:1px solid rgba(255,255,255,.18);border-radius:28px;background:rgba(16,18,34,.96);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);box-shadow:0 8px 24px rgba(0,0,0,.4),inset 0 1px 0 rgba(255,255,255,.1);animation:nav-enter .4s ease-out both}
+  .bottom-nav-inner{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));align-items:end}
+  .bottom-link{position:relative;min-width:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;padding:5px 2px 4px;color:rgba(255,255,255,.62);font-size:.72rem;font-weight:600;transition:color .2s,transform .2s}
+  .bottom-link:hover,.bottom-link.active{color:#fff}
+  .bottom-link svg{width:23px;height:23px;transition:transform .2s,color .2s}
+  .bottom-link.active:not(.bottom-center) svg{transform:translateY(-2px)}
+  .bottom-link.active::after{content:"";position:absolute;bottom:-8px;width:28px;height:4px;border-radius:5px;background:#67E8F9;box-shadow:0 0 14px rgba(103,232,249,.8);animation:nav-pop .25s ease-out both}
+  .bottom-center{overflow:visible;padding-top:0}
+  .bottom-center .center-icon{width:62px;height:62px;margin-top:-31px;border-radius:50%;display:grid;place-items:center;color:#fff;background:linear-gradient(145deg,#2563EB,#4F46E5);border:3px solid rgba(255,255,255,.18);box-shadow:0 0 0 7px rgba(255,255,255,.05),0 8px 26px rgba(37,99,235,.52);transition:transform .2s,box-shadow .2s}
+  .bottom-center svg{width:27px;height:27px}
+  .bottom-center.active .center-icon,.bottom-center:hover .center-icon{transform:translateY(-4px) scale(1.04);box-shadow:0 0 0 8px rgba(255,255,255,.07),0 10px 32px rgba(37,99,235,.72)}
+  .bottom-center.active::after{bottom:-8px}
+  .nav-cart-count{position:absolute;top:0;right:calc(50% - 22px);min-width:18px;height:18px;display:grid;place-items:center;padding:0 4px;border-radius:99px;background:#67E8F9;color:#0B1026;font-size:.65rem;font-weight:800}
+  .header-tools{display:flex;align-items:center;gap:6px}
+  .header-search{height:42px;width:42px;display:flex;align-items:center;overflow:hidden;border:1px solid transparent;border-radius:14px;transition:width .42s cubic-bezier(.2,.8,.2,1),background .25s,border-color .25s}
+  .header-search.open{width:min(220px,38vw);background:rgba(255,255,255,.09);border-color:rgba(103,232,249,.55)}
+  .header-search input{width:0;min-width:0;opacity:0;padding:0;border:0;background:transparent;color:#fff;outline:none;transition:width .38s cubic-bezier(.2,.8,.2,1),opacity .2s .08s,padding .35s}
+  .header-search.open input{width:calc(100% - 42px);opacity:1;padding:0 .15rem 0 .8rem}
+  .header-search input::placeholder{color:rgba(255,255,255,.56)}
+  .header-icon{width:40px;height:40px;flex:none;display:grid;place-items:center;border-radius:12px;color:#fff;transition:background .2s,transform .2s}
+  .header-icon:hover{background:rgba(255,255,255,.12)}
+  .header-icon:active{transform:scale(.92)}
+  body{padding-bottom:110px}
+  @media(max-width:420px){.bottom-nav{width:calc(100% - 18px);padding:9px 7px 8px;border-radius:23px}.bottom-link{font-size:.65rem;gap:4px}.bottom-link svg{width:21px;height:21px}.bottom-center .center-icon{width:56px;height:56px;margin-top:-27px}}
+
+  .glass{background:rgba(24,30,65,.84);border:1px solid var(--edge);border-radius:22px;
+    -webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);
+    box-shadow:0 6px 22px rgba(3,6,25,.28),inset 0 1px 0 rgba(255,255,255,.16)}
+  .glass-strong{background:rgba(16,22,58,.94);border:1px solid var(--edge);
+    -webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);
+    box-shadow:0 10px 30px rgba(3,6,25,.4),inset 0 1px 0 rgba(255,255,255,.14)}
+  @supports not ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))){.glass{background:rgba(30,38,80,.85)}}
+
+  .inp{width:100%;background:rgba(255,255,255,.09);border:1px solid rgba(255,255,255,.2);color:#fff;border-radius:12px;padding:.65rem .85rem;font-size:.95rem}
+  .inp::placeholder{color:rgba(255,255,255,.5)}
+  .inp:focus{border-color:#67E8F9;background:rgba(255,255,255,.14);outline:none}
+  select.inp option{color:#0B1026;background:#fff}
+  .btn{display:inline-flex;align-items:center;justify-content:center;gap:.45rem;border-radius:12px;padding:.65rem 1.1rem;font-weight:600;color:#fff;transition:transform .15s,filter .15s,background .15s}
+  .btn:hover{filter:brightness(1.12)}.btn:active{transform:scale(.97)}
+  .btn:disabled{opacity:.4;cursor:not-allowed;filter:none}
+  .btn-main{background:linear-gradient(135deg,#0891B2,#7C3AED)}
+  .btn-wa{background:linear-gradient(135deg,#16A34A,#059669)}
+  .btn-glass{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.25)}
+  .btn-glass:hover{background:rgba(255,255,255,.18)}
+  .btn-danger{background:linear-gradient(135deg,#E11D48,#BE123C)}
+  .chip{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.22);border-radius:999px;padding:.35rem .95rem;font-size:.9rem;font-weight:500;color:#fff}
+  .chip:hover{background:rgba(255,255,255,.18)}
+  .chip.on{background:linear-gradient(135deg,#0891B2,#7C3AED);border-color:transparent}
+  .chip:disabled{opacity:.4}
+  .navl{padding:.5rem .85rem;border-radius:10px;font-weight:500;white-space:nowrap;color:rgba(255,255,255,.8)}
+  .navl:hover{background:rgba(255,255,255,.12);color:#fff}
+  .badge{font-size:.72rem;font-weight:700;border-radius:999px;padding:.15rem .6rem;border:1px solid}
+  .b-new{background:rgba(34,211,238,.18);color:#A5F3FC;border-color:rgba(34,211,238,.45)}
+  .b-sec{background:rgba(251,191,36,.18);color:#FDE68A;border-color:rgba(251,191,36,.45)}
+
+  .phone{width:150px;height:300px;border-radius:34px;padding:7px;background:linear-gradient(160deg,rgba(255,255,255,.55),rgba(255,255,255,.08));border:1px solid rgba(255,255,255,.45);box-shadow:0 30px 60px rgba(3,6,25,.5);transform:rotate(8deg);animation:float 7s ease-in-out infinite}
+  .phone-screen{height:100%;border-radius:28px;background:linear-gradient(160deg,#22D3EE,#7C3AED 55%,#F472B6);position:relative;padding:34px 12px 12px;display:grid;grid-template-columns:repeat(3,1fr);gap:8px;align-content:start}
+  .phone-screen::before{content:"";position:absolute;top:9px;left:50%;width:44px;height:12px;margin-left:-22px;border-radius:8px;background:rgba(11,16,38,.7)}
+  .phone-screen b{aspect-ratio:1;border-radius:10px;background:rgba(255,255,255,.3)}
+
+  .pvis{height:190px;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}
+  .pvis button{position:absolute;inset:0;z-index:10;width:100%;height:100%;cursor:zoom-in}
+  .pvis button img{width:100%;height:100%;object-fit:contain}
+  .mini{width:62px;height:112px;border-radius:16px;border:1px solid rgba(255,255,255,.6);background:rgba(255,255,255,.24);display:grid;place-items:center;font:800 1.35rem system-ui,sans-serif;transform:rotate(-6deg);box-shadow:0 8px 20px rgba(0,0,0,.25)}
+  .pcard{transition:border-color .2s}.pcard:hover{border-color:rgba(255,255,255,.4)}
+  #drawer{transition:transform .3s ease}
+  .tbl{width:100%;font-size:.875rem}
+  .tbl th{text-align:left;font-weight:600;padding:.55rem;border-bottom:1px solid rgba(255,255,255,.18);white-space:nowrap;color:var(--mut)}
+  .tbl td{padding:.55rem;border-bottom:1px solid rgba(255,255,255,.08);vertical-align:middle}
+  .dmg{display:flex;align-items:center;gap:.75rem;border-radius:14px;padding:.8rem;cursor:pointer;border:1px solid rgba(255,255,255,.14);background:rgba(255,255,255,.05);transition:background .15s,border-color .15s}
+  .dmg:hover{background:rgba(255,255,255,.12)}
+  .dmg.on{background:rgba(103,232,249,.14);border-color:rgba(103,232,249,.6)}
+  .dmg input{width:1.15rem;height:1.15rem;accent-color:#22D3EE}
+  ::-webkit-scrollbar{height:6px;width:8px}::-webkit-scrollbar-thumb{background:rgba(255,255,255,.25);border-radius:9px}
+  /* Elemen muncul lembut saat memasuki viewport */
+  .scroll-reveal{opacity:0;transform:translateY(24px);transition:opacity .65s ease,transform .65s cubic-bezier(.2,.7,.2,1)}
+  .scroll-reveal.is-visible{opacity:1;transform:translateY(0)}
+  @media (max-width:640px){
+    html{scroll-padding-top:80px}
+    .pvis{height:170px}
+    .blobs i{filter:blur(30px);opacity:.25}
+    .glass,.glass-strong,.bottom-nav{-webkit-backdrop-filter:none;backdrop-filter:none}
+    .phone{width:120px;height:240px}
+    .phone-screen{padding-top:30px;gap:6px}
+    .pvis{height:130px}
+    .mini{width:54px;height:98px}
+    #drawer{max-width:100%;border-radius:0}
+  }
+  @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto!important}.scroll-reveal{opacity:1;transform:none}}
+</style>
+</head>
+<body>
+<div class="blobs" aria-hidden="true"><i class="b1"></i><i class="b2"></i><i class="b3"></i></div>
+
+<!-- HEADER -->
+<header class="sticky top-0 z-30 px-3 pt-3">
+  <div class="glass max-w-6xl mx-auto px-3 sm:px-4 h-16 flex items-center justify-between" style="border-radius:18px">
+    <a href="#beranda" class="flex items-center gap-2 font-head font-bold text-lg" aria-label="RizkyCell, beranda">
+      <span class="w-9 h-9 rounded-xl grid place-items-center" style="background:linear-gradient(135deg,#22D3EE,#8B5CF6)">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2"><rect x="7" y="2" width="10" height="20" rx="2.5"/><path d="M11 18h2"/></svg></span>
+      <span>RizkyCell</span>
+    </a>
+    <div class="header-tools">
+      <div id="headerSearch" class="header-search">
+        <input id="headerSearchInput" type="search" placeholder="Cari HP…" aria-label="Cari produk di katalog">
+        <button type="button" data-act="searchToggle" class="header-icon" aria-label="Buka pencarian" aria-expanded="false" aria-controls="headerSearchInput" title="Cari produk">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg>
+        </button>
+      </div>
+      <button type="button" data-act="admin" class="header-icon" aria-label="Panel admin" title="Panel admin">
+        <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 018 0v4"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+<nav class="bottom-nav" aria-label="Navigasi utama">
+  <div class="bottom-nav-inner">
+    <a href="#beranda" class="bottom-link active" data-act="nav" data-nav="home" aria-label="Beranda">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="m3 10 9-7 9 7v10a1 1 0 0 1-1 1h-6v-7h-4v7H4a1 1 0 0 1-1-1z"/></svg><span>Beranda</span>
+    </a>
+    <a href="#katalog" class="bottom-link" data-act="goto" data-cond="baru" data-nav="new" aria-label="Katalog HP baru">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="6" y="2.5" width="12" height="19" rx="2.5"/><path d="M10 5h4M10 18h4"/></svg><span>HP Baru</span>
+    </a>
+    <a href="#servis" class="bottom-link bottom-center" data-act="nav" data-nav="service" aria-label="Kalkulator servis">
+      <span class="center-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M20 7V4m0 0h-3m3 0-4 4M4 17v3m0 0h3m-3 0 4-4"/><path d="M7 7a7 7 0 0 1 11-1M17 17a7 7 0 0 1-11 1"/></svg></span><span>Servis</span>
+    </a>
+    <a href="#katalog" class="bottom-link" data-act="goto" data-cond="second" data-nav="second" aria-label="Katalog HP second">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M3 8.5 5 4h14l2 4.5v2a3 3 0 0 1-5 2.2 3 3 0 0 1-4 0 3 3 0 0 1-4 0A3 3 0 0 1 3 10.5z"/><path d="M5 12v8h14v-8M9 20v-5h6v5"/></svg><span>Second</span>
+    </a>
+    <button type="button" class="bottom-link" data-act="cart" data-nav="cart" aria-label="Buka keranjang">
+      <span class="relative"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M3 3h2l2.2 12.1a2 2 0 0 0 2 1.6h8.9a2 2 0 0 0 2-1.6L22 7H6"/><circle cx="10" cy="21" r="1"/><circle cx="18" cy="21" r="1"/></svg><span id="cartCount" class="nav-cart-count">0</span></span><span>Keranjang</span>
+    </button>
+  </div>
+</nav>
+
+<main>
+<!-- HERO -->
+<section id="beranda" class="max-w-6xl mx-auto px-4 pt-14 pb-12 grid lg:grid-cols-5 gap-10 items-center">
+  <div class="lg:col-span-3">
+    <h1 class="font-head font-extrabold text-4xl sm:text-6xl leading-[1.07]">HP baru, HP second, dan servis dengan harga yang jelas.</h1>
+    <p class="mt-5 text-lg max-w-xl" style="color:var(--mut)">Pilih unit, hitung estimasi servis sendiri, lalu pesan lewat WhatsApp. Tanpa antre dan tanpa tebak-tebakan biaya.</p>
+    <div class="mt-7 flex flex-wrap gap-3">
+      <a href="#katalog" class="btn btn-main">Lihat katalog</a>
+      <a href="#servis" class="btn btn-glass">Hitung biaya servis</a>
+    </div>
+    <ul class="mt-8 flex flex-wrap gap-3 text-sm">
+      <li><button type="button" class="glass px-4 py-2 hover:bg-white/10 transition" style="border-radius:999px" data-act="warranty">Garansi toko 7 hari</button></li>
+      <li><a href="#servis" class="glass inline-block px-4 py-2 hover:bg-white/10 transition" style="border-radius:999px">Estimasi servis transparan</a></li>
+      <li><button type="button" class="glass px-4 py-2 hover:bg-white/10 transition" style="border-radius:999px" data-act="quickWA">Pesan langsung ke WhatsApp</button></li>
+    </ul>
+  </div>
+  <div class="lg:col-span-2 relative">
+    <div class="absolute right-4 top-0"><div class="phone"><div class="phone-screen"><b></b><b></b><b></b><b></b><b></b><b></b><b></b><b></b><b></b></div></div></div>
+    <div class="glass p-5 relative" style="margin-top:170px">
+      <h2 class="font-head font-bold text-lg">Cek status servis</h2>
+      <p class="text-sm mb-3" style="color:var(--mut)">Masukkan nomor servis dari pesan WhatsApp Anda.</p>
+      <div class="flex gap-2">
+        <input id="trackId" class="inp" placeholder="Contoh: SV-1001" aria-label="Nomor servis">
+        <button data-act="track" class="btn btn-main">Cek</button>
+      </div>
+      <div id="trackRes" class="mt-3 text-sm" aria-live="polite"></div>
+    </div>
+  </div>
+</section>
+
+<!-- KATALOG -->
+<section id="katalog" class="max-w-6xl mx-auto px-4 py-10">
+  <div class="flex flex-wrap items-end justify-between gap-3 mb-5">
+    <h2 class="font-head font-bold text-3xl">Katalog HP</h2>
+    <span id="resCount" class="text-sm" style="color:var(--mut)"></span>
+  </div>
+  <div class="glass p-4 grid md:grid-cols-3 gap-3 mb-6">
+    <input id="fQ" class="inp" placeholder="Cari nama atau merek…" aria-label="Cari HP">
+    <select id="fBrand" class="inp" aria-label="Filter merek"></select>
+    <div class="flex gap-2 items-center flex-wrap" id="fCond">
+      <button class="chip on" data-cond="">Semua</button>
+      <button class="chip" data-cond="baru">Baru</button>
+      <button class="chip" data-cond="second">Second</button>
+    </div>
+  </div>
+  <div id="grid" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5"></div>
+</section>
+
+<!-- CICILAN & TRADE-IN -->
+<section id="fitur" class="max-w-6xl mx-auto px-4 py-12">
+  <div class="grid lg:grid-cols-2 gap-6">
+    <div class="glass p-6">
+      <h2 class="font-head font-bold text-3xl">Simulasi cicilan</h2>
+      <p class="mt-2" style="color:var(--mut)">Perkiraan angsuran untuk membantu membandingkan pilihan. Bunga/biaya di bawah hanya asumsi simulasi; syarat final mengikuti penyedia pembiayaan.</p>
+      <div class="mt-5 grid sm:grid-cols-2 gap-3">
+        <label class="text-sm">Harga barang (Rp)<input id="loanPrice" class="inp mt-1" type="number" min="1" value="2399000" inputmode="numeric"></label>
+        <label class="text-sm">Penyedia simulasi<select id="loanProvider" class="inp mt-1"><option value="0.025">Kredivo · asumsi 2,5%/bulan</option><option value="0.03">Akulaku · asumsi 3%/bulan</option><option value="0.028">Home Credit · asumsi 2,8%/bulan</option><option value="0.02">Kartu kredit · asumsi 2%/bulan</option></select></label>
+        <label class="text-sm">Tenor<select id="loanTerm" class="inp mt-1"><option value="3">3 bulan</option><option value="6">6 bulan</option><option value="9">9 bulan</option><option value="12">12 bulan</option></select></label>
+      </div>
+      <div class="mt-5 rounded-xl bg-white/10 p-4" aria-live="polite"><div class="text-sm" style="color:var(--mut)">Estimasi angsuran per bulan</div><div id="loanResult" class="font-head font-extrabold text-2xl">Rp 0</div><div id="loanNote" class="text-xs mt-1" style="color:var(--mut)"></div></div>
+    </div>
+    <div class="glass p-6">
+      <h2 class="font-head font-bold text-3xl">Taksiran harga trade-in</h2>
+      <p class="mt-2" style="color:var(--mut)">Masukkan perkiraan harga pasar HP bekas sejenis dan kondisi unit. Taksiran ini bukan penawaran final; unit perlu diperiksa langsung.</p>
+      <div class="mt-5 grid sm:grid-cols-2 gap-3">
+        <label class="text-sm sm:col-span-2">Merek / tipe HP lama<input id="tradeModel" class="inp mt-1" placeholder="Contoh: iPhone 11 128GB"></label>
+        <label class="text-sm sm:col-span-2">Perkiraan harga pasar unit normal (Rp)<input id="tradeBase" class="inp mt-1" type="number" min="0" placeholder="Contoh: 4000000" inputmode="numeric"></label>
+        <label class="text-sm">Layar<select id="tradeScreen" class="inp mt-1"><option value="1">Normal</option><option value="0.8">Gores ringan</option><option value="0.5">Retak / bermasalah</option></select></label>
+        <label class="text-sm">Bodi<select id="tradeBody" class="inp mt-1"><option value="1">Mulus</option><option value="0.9">Pemakaian wajar</option><option value="0.7">Penyok / banyak lecet</option></select></label>
+        <label class="text-sm">Tombol & fungsi<select id="tradeFunction" class="inp mt-1"><option value="1">Semua normal</option><option value="0.75">Ada fungsi bermasalah</option></select></label>
+        <label class="text-sm">Kelengkapan<select id="tradeKit" class="inp mt-1"><option value="1">Fullset</option><option value="0.95">Ada charger</option><option value="0.9">Unit saja</option></select></label>
+      </div>
+      <button class="btn btn-main mt-4" data-act="tradeEstimate">Hitung taksiran</button>
+      <div id="tradeResult" class="mt-4 text-sm" aria-live="polite" style="color:var(--mut)">Isi data untuk melihat kisaran taksiran.</div>
+    </div>
+  </div>
+</section>
+
+<!-- LAYANAN DIGITAL -->
+<section id="digital" class="max-w-6xl mx-auto px-4 py-10">
+  <div class="grid lg:grid-cols-2 gap-6">
+    <div class="glass p-6">
+      <h2 class="font-head font-bold text-3xl">Pulsa, paket data & token listrik</h2>
+      <p class="mt-2" style="color:var(--mut)">Siapkan pesanan lewat WhatsApp. Pembayaran otomatis dengan QRIS/Virtual Account memerlukan integrasi penyedia pembayaran dan belum tersedia di halaman ini.</p>
+      <div class="mt-5 grid sm:grid-cols-2 gap-3">
+        <label class="text-sm">Jenis produk<select id="digitalType" class="inp mt-1"><option>Pulsa</option><option>Paket data</option><option>Token listrik</option></select></label>
+        <label class="text-sm">Nominal<input id="digitalAmount" class="inp mt-1" placeholder="Contoh: 50.000 / 10.000"></label>
+        <label class="text-sm sm:col-span-2">Nomor HP / ID pelanggan<input id="digitalTarget" class="inp mt-1" inputmode="numeric" placeholder="Nomor tujuan atau ID meter"></label>
+      </div>
+      <button class="btn btn-wa mt-4" data-act="digitalOrder">Pesan via WhatsApp</button>
+    </div>
+    <div class="glass p-6">
+      <h2 class="font-head font-bold text-3xl">Cek masa aktif & tagihan</h2>
+      <p class="mt-2" style="color:var(--mut)">Ajukan pengecekan ke admin. Status pascabayar atau masa aktif tidak dapat dibaca langsung tanpa koneksi ke operator.</p>
+      <div class="mt-5 grid sm:grid-cols-2 gap-3">
+        <label class="text-sm">Jenis pengecekan<select id="billType" class="inp mt-1"><option>Masa aktif kartu</option><option>Tagihan pascabayar</option></select></label>
+        <label class="text-sm">Nomor HP / ID pelanggan<input id="billTarget" class="inp mt-1" inputmode="numeric" placeholder="Masukkan nomor tujuan"></label>
+      </div>
+      <button class="btn btn-wa mt-4" data-act="billCheck">Tanyakan via WhatsApp</button>
+      <p class="text-xs mt-3" style="color:var(--mut)">Jangan kirim PIN, OTP, atau kata sandi.</p>
+    </div>
+  </div>
+</section>
+
+<!-- KALKULATOR -->
+<section id="servis" class="max-w-6xl mx-auto px-4 py-12">
+  <div class="grid lg:grid-cols-5 gap-6">
+    <div class="lg:col-span-3 glass p-6">
+      <h2 class="font-head font-bold text-3xl">Kalkulator estimasi servis</h2>
+      <p class="mt-2 max-w-xl" style="color:var(--mut)">Pilih kelas HP dan centang kerusakan yang dialami. Harga final dikonfirmasi teknisi setelah pengecekan fisik.</p>
+      <div class="mt-5 flex flex-wrap gap-2" id="tier"></div>
+      <div id="dmg" class="mt-5 grid sm:grid-cols-2 gap-3"></div>
+    </div>
+    <div class="lg:col-span-2 glass-strong p-6 h-fit" style="border-radius:22px">
+      <h3 class="font-head font-bold text-xl">Booking servis</h3>
+      <div class="mt-4 space-y-3">
+        <input id="sName" class="inp" placeholder="Nama Anda" aria-label="Nama">
+        <input id="sModel" class="inp" placeholder="Tipe HP (mis. Redmi Note 10)" aria-label="Tipe HP">
+        <input id="sPhone" class="inp" inputmode="tel" placeholder="No. WhatsApp Anda (opsional)" aria-label="No WhatsApp">
+        <textarea id="sNote" class="inp" rows="2" placeholder="Keluhan tambahan (opsional)" aria-label="Keluhan tambahan"></textarea>
+      </div>
+      <div class="mt-5 pt-4 border-t border-white/15">
+        <div class="text-sm" style="color:var(--mut)">Estimasi biaya</div>
+        <div id="estimate" class="font-head font-extrabold text-3xl">Rp 0</div>
+        <div id="estList" class="text-sm mt-1" style="color:var(--mut)"></div>
+      </div>
+      <button data-act="book" class="btn btn-wa w-full mt-4">Booking servis via WhatsApp</button>
+      <button data-act="serviceQuestion" class="btn btn-glass w-full mt-2">Tanya estimasi ini via WhatsApp</button>
+    </div>
+  </div>
+</section>
+
+<!-- CEK IMEI & ULASAN -->
+<section id="kepercayaan" class="max-w-6xl mx-auto px-4 py-10">
+  <div class="grid lg:grid-cols-2 gap-6">
+    <div class="glass p-6">
+      <h2 class="font-head font-bold text-3xl">Cek IMEI & garansi resmi</h2>
+      <p class="mt-2" style="color:var(--mut)">Periksa IMEI pada perangkat dan dus, lalu cocokkan melalui kanal resmi. Hasil pengecekan tetap perlu dikonfirmasi sebelum transaksi.</p>
+      <div class="flex flex-wrap gap-3 mt-5">
+        <a class="btn btn-main" href="https://imei.kemenperin.go.id/" target="_blank" rel="noopener noreferrer">Cek IMEI Kemenperin</a>
+        <a class="btn btn-glass" href="https://checkcoverage.apple.com/" target="_blank" rel="noopener noreferrer">Cek garansi Apple</a>
+        <a class="btn btn-glass" href="https://www.samsung.com/id/support/" target="_blank" rel="noopener noreferrer">Dukungan Samsung</a>
+      </div>
+    </div>
+    <div class="glass p-6">
+      <h2 class="font-head font-bold text-3xl">Ulasan pelanggan</h2>
+      <p class="mt-2" style="color:var(--mut)">Ulasan dan foto serah terima akan ditampilkan di sini setelah toko menambahkan materi asli dengan izin pelanggan.</p>
+      <div class="mt-5 rounded-xl border border-dashed border-white/25 p-5 text-sm" style="color:var(--mut)">
+        <strong class="block text-white">Bagikan pengalaman Anda</strong>
+        Kirim ulasan atau foto serah terima kepada admin. Pastikan nama, nomor telepon, dan informasi pribadi lain disamarkan sebelum dipublikasikan.
+        <button class="btn btn-wa mt-4" data-act="reviewWA">Kirim ulasan via WhatsApp</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ADMIN -->
+<section id="admin" class="max-w-6xl mx-auto px-4 py-12 hidden">
+  <div class="flex items-center justify-between mb-5">
+    <h2 class="font-head font-bold text-3xl">Panel admin</h2>
+    <div class="flex gap-2">
+      <button data-act="resetData" class="btn btn-glass text-sm hidden" id="btnReset">Reset data contoh</button>
+      <button data-act="closeAdmin" class="btn btn-glass text-sm">Tutup</button>
+    </div>
+  </div>
+  <div id="adminBody"></div>
+</section>
+</main>
+
+<footer class="px-3 pb-6 pt-6">
+  <div class="glass max-w-6xl mx-auto px-5 py-4 text-sm flex flex-wrap justify-between gap-2" style="color:var(--mut);border-radius:18px">
+    <span>© Konter Nusantara. Buka setiap hari 09.00–21.00.</span>
+    <span>Pemesanan diproses lewat WhatsApp.</span>
+  </div>
+</footer>
+
+<!-- CART DRAWER -->
+<div id="overlay" class="fixed inset-0 bg-black/55 z-40 hidden" data-act="cart"></div>
+<aside id="drawer" class="glass-strong fixed top-0 right-0 h-full w-full max-w-md z-50 translate-x-full flex flex-col" style="border-radius:24px 0 0 24px" aria-label="Keranjang belanja">
+  <div class="flex items-center justify-between p-5 border-b border-white/15">
+    <h2 class="font-head font-bold text-xl">Keranjang</h2>
+    <button data-act="cart" class="p-2 rounded-lg hover:bg-white/10" aria-label="Tutup keranjang">✕</button>
+  </div>
+  <div id="cartItems" class="flex-1 overflow-y-auto p-5 space-y-3"></div>
+  <div class="p-5 border-t border-white/15 space-y-2">
+    <input id="cName" class="inp" placeholder="Nama pemesan" aria-label="Nama pemesan">
+    <select id="cMethod" class="inp" aria-label="Metode">
+      <option value="Ambil di toko">Ambil di toko</option>
+      <option value="Antar ke alamat (COD)">Antar ke alamat (COD)</option>
+    </select>
+    <textarea id="cAddr" class="inp hidden" rows="2" placeholder="Alamat lengkap" aria-label="Alamat"></textarea>
+    <textarea id="cNote" class="inp" rows="1" placeholder="Catatan (opsional)" aria-label="Catatan"></textarea>
+    <div class="flex justify-between items-center pt-1"><span style="color:var(--mut)">Total</span><strong id="cTotal" class="font-head text-2xl">Rp 0</strong></div>
+    <button data-act="checkout" id="btnCheckout" class="btn btn-wa w-full">Checkout via WhatsApp</button>
+  </div>
+</aside>
+
+<!-- MODAL -->
+<div id="modal" class="fixed inset-0 z-[70] hidden items-center justify-center p-4">
+  <div class="absolute inset-0 bg-black/60" data-act="mClose"></div>
+  <div id="modalBox" class="glass-strong relative w-full max-w-md p-6"></div>
+</div>
+<div id="toast" class="fixed bottom-5 left-1/2 -translate-x-1/2 z-[80] glass-strong px-4 py-2 text-sm hidden" style="border-radius:12px" role="status"></div>
+
+<script>
+/* ===== KONFIGURASI (ubah sesuai konter Anda) ===== */
+const WA_ADMIN = "6281234567890";   // nomor WhatsApp admin, format 62xxxxxxxxxx
+const ADMIN_PIN = "1234";           // PIN panel admin
+const STORE = "Konter Nusantara";
+
+const SERVICES = [
+  {k:'lcd', n:'Ganti LCD / layar', p:350000},
+  {k:'bat', n:'Ganti baterai', p:150000},
+  {k:'cas', n:'Ganti port charger', p:120000},
+  {k:'cam', n:'Perbaikan kamera', p:250000},
+  {k:'spk', n:'Speaker / mikrofon', p:100000},
+  {k:'sw',  n:'Software / bootloop', p:100000},
+  {k:'air', n:'HP kena air / mati total', p:200000},
+  {k:'tmb', n:'Ganti touchscreen / kaca', p:200000}
+];
+const TIERS = [{k:1,n:'HP entry-level',m:1},{k:2,n:'HP menengah',m:1.4},{k:3,n:'HP flagship / iPhone',m:2.2}];
+const STATUSES = ['Menunggu','Sedang dicek','Menunggu sparepart','Dikerjakan','Selesai','Sudah diambil'];
+const GRADS = ['linear-gradient(135deg,#0891B2,#7C3AED)','linear-gradient(135deg,#7C3AED,#EC4899)','linear-gradient(135deg,#059669,#0891B2)','linear-gradient(135deg,#EA580C,#DB2777)','linear-gradient(135deg,#2563EB,#7C3AED)'];
+
+const SEED_PRODUCTS = [
+  {id:'p1',name:'Samsung Galaxy A15 4/128GB',brand:'Samsung',cond:'baru',price:2399000,stock:6,note:'Garansi resmi 1 tahun, layar AMOLED 90Hz',img:'https://fdn2.gsmarena.com/vv/pics/samsung/samsung-galaxy-a15-5g-1.jpg'},
+  {id:'p2',name:'Xiaomi Redmi Note 13 8/256GB',brand:'Xiaomi',cond:'baru',price:2899000,stock:4,note:'Kamera 108MP, fast charging 33W',img:'https://fdn2.gsmarena.com/vv/pics/xiaomi/xiaomi-redmi-note-13-4g-1.jpg'},
+  {id:'p3',name:'OPPO A58 6/128GB',brand:'OPPO',cond:'baru',price:2199000,stock:5,note:'Garansi resmi, baterai 5000mAh',img:'https://fdn2.gsmarena.com/vv/pics/oppo/oppo-a58-4g-1.jpg'},
+  {id:'p4',name:'Infinix Hot 40 Pro 8/256GB',brand:'Infinix',cond:'baru',price:2099000,stock:3,note:'Layar 120Hz, harga bersahabat',img:'https://fdn2.gsmarena.com/vv/pics/infinix/infinix-hot-40-pro-1.jpg'},
+  {id:'p5',name:'iPhone 11 128GB',brand:'Apple',cond:'second',price:4850000,stock:2,note:'Mulus 90%, battery health 85%, fullset',img:'https://fdn2.gsmarena.com/vv/pics/apple/apple-iphone-11-1.jpg'},
+  {id:'p6',name:'Samsung Galaxy A32 6/128GB',brand:'Samsung',cond:'second',price:1650000,stock:2,note:'Normal semua fungsi, minus pemakaian wajar',img:'https://fdn2.gsmarena.com/vv/pics/samsung/samsung-galaxy-a32-4g-1.jpg'},
+  {id:'p7',name:'Redmi 9T 4/64GB',brand:'Xiaomi',cond:'second',price:1050000,stock:3,note:'Unit only + charger, garansi toko 7 hari',img:'https://fdn2.gsmarena.com/vv/pics/xiaomi/xiaomi-redmi-9t-1.jpg'},
+  {id:'p8',name:'iPhone XR 64GB',brand:'Apple',cond:'second',price:3200000,stock:1,note:'Face ID normal, battery health 82%',img:'https://fdn2.gsmarena.com/vv/pics/apple/apple-iphone-xr-1.jpg'},
+  {id:'p9',name:'vivo Y20 3/64GB',brand:'vivo',cond:'second',price:850000,stock:2,note:'Fullset box, layar mulus',img:'https://fdn2.gsmarena.com/vv/pics/vivo/vivo-y20-1.jpg'}
+];
+const SEED_SERVICES = [
+  {id:'SV-1001',name:'Contoh Pelanggan',phone:'',model:'Redmi 9',items:['Ganti baterai'],est:150000,note:'',status:'Dikerjakan',date:new Date().toISOString()}
+];
+
+/* ===== UTIL ===== */
+const $ = s => document.querySelector(s);
+const rp = n => 'Rp ' + Math.round(+n || 0).toLocaleString('id-ID');
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const clone = o => JSON.parse(JSON.stringify(o));
+const load = (k, d) => { try { const v = localStorage.getItem(k); return v ? JSON.parse(v) : clone(d); } catch (e) { return clone(d); } };
+const save = (k, v) => { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) {} };
+function toast(msg){ const t=$('#toast'); t.textContent=msg; t.classList.remove('hidden'); clearTimeout(toast.t); toast.t=setTimeout(()=>t.classList.add('hidden'),3000); }
+
+let revealObserver;
+function observeReveals(root=document){
+  if (!root.querySelectorAll) return;
+  const elements = root.querySelectorAll('.scroll-reveal');
+  if (!revealObserver) { elements.forEach(el => el.classList.add('is-visible')); return; }
+  elements.forEach(el => revealObserver.observe(el));
+}
+function setupScrollReveal(){
+  document.querySelectorAll('main > section, #beranda > div, #katalog > .glass, #servis .glass, footer .glass')
+    .forEach(el => el.classList.add('scroll-reveal'));
+  if (!('IntersectionObserver' in window)) { observeReveals(); return; }
+  revealObserver = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('is-visible');
+        revealObserver.unobserve(entry.target);
+      }
+    });
+  }, {threshold:.12, rootMargin:'0px 0px -35px 0px'});
+  observeReveals();
+}
+
+/* Dialog di dalam halaman (pengganti confirm / popup yang diblokir sandbox) */
+let pendingYes = null, lastMsg = '';
+function openModal(html, wide=false){
+  const box = $('#modalBox');
+  box.classList.toggle('max-w-md', !wide);
+  box.classList.toggle('max-w-5xl', wide);
+  box.innerHTML = html;
+  $('#modal').classList.remove('hidden'); $('#modal').classList.add('flex');
+}
+function closeModal(){ $('#modal').classList.add('hidden'); $('#modal').classList.remove('flex'); pendingYes = null; }
+function ask(text, fn){
+  pendingYes = fn;
+  openModal(`<p class="font-head font-bold text-lg">${esc(text)}</p>
+    <div class="flex gap-2 mt-5 justify-end"><button class="btn btn-glass" data-act="mClose">Batal</button><button class="btn btn-danger" data-act="mYes">Ya, lanjutkan</button></div>`);
+}
+function openWA(msg){
+  lastMsg = msg;
+  const url = `https://wa.me/${WA_ADMIN}?text=${encodeURIComponent(msg)}`;
+  let w = null;
+  try { w = window.open(url, '_blank'); } catch (e) {}
+  if (!w) openModal(`<h3 class="font-head font-bold text-xl">Lanjutkan ke WhatsApp</h3>
+    <p class="text-sm mt-2" style="color:var(--mut)">Browser memblokir jendela baru. Buka WhatsApp dengan tombol di bawah, atau salin pesannya.</p>
+    <textarea readonly rows="7" class="inp mt-3 text-sm">${esc(msg)}</textarea>
+    <div class="flex gap-2 mt-4 justify-end flex-wrap"><button class="btn btn-glass" data-act="copyMsg">Salin pesan</button>
+    <a class="btn btn-wa" href="${url}" target="_blank" rel="noopener">Buka WhatsApp</a></div>`);
+}
+
+/* ===== STATE ===== */
+let products = load('konter_products', SEED_PRODUCTS).map(p => ({
+  ...p,
+  img: p.img || (SEED_PRODUCTS.find(seed => seed.id === p.id) || {}).img || ''
+}));
+let services = load('konter_services', SEED_SERVICES);
+let cart = load('konter_cart', []);
+let filter = {q:'', brand:'', cond:''};
+let tier = 1;
+let picked = new Set();
+let isAdmin = false;
+try { isAdmin = sessionStorage.getItem('konter_admin') === '1'; } catch (e) {}
+const persist = () => { save('konter_products', products); save('konter_services', services); save('konter_cart', cart); };
+const mult = () => TIERS.find(t => t.k === tier).m;
+
+/* ===== KATALOG ===== */
+function renderBrands(){
+  const brands = [...new Set(products.map(p => p.brand))].sort();
+  const sel = $('#fBrand');
+  sel.innerHTML = '<option value="">Semua merek</option>' + brands.map(b => `<option value="${esc(b)}">${esc(b)}</option>`).join('');
+  sel.value = brands.includes(filter.brand) ? filter.brand : '';
+  filter.brand = sel.value;
+}
+function renderCatalog(){
+  const q = filter.q.toLowerCase();
+  const list = products.filter(p =>
+    (!filter.cond || p.cond === filter.cond) &&
+    (!filter.brand || p.brand === filter.brand) &&
+    (!q || (p.name + ' ' + p.brand + ' ' + (p.note || '')).toLowerCase().includes(q)));
+  $('#resCount').textContent = `${list.length} unit ditemukan`;
+  $('#grid').innerHTML = list.length ? list.map(p => {
+    const inCart = (cart.find(c => c.id === p.id) || {}).qty || 0;
+    const out = p.stock <= 0 || inCart >= p.stock;
+    const g = GRADS[[...p.brand].reduce((a, c) => a + c.charCodeAt(0), 0) % GRADS.length];
+    const img = p.img ? `<button type="button" data-act="preview" data-src="${esc(p.img)}" data-name="${esc(p.name)}" aria-label="Perbesar foto ${esc(p.name)}"><img src="${esc(p.img)}" alt="Foto ${esc(p.name)}" loading="lazy" decoding="async" referrerpolicy="no-referrer" onload="this.closest('.pvis').querySelector('.mini').hidden=true" onerror="this.closest('button').hidden=true"></button>` : '';
+    return `<article class="glass pcard scroll-reveal overflow-hidden flex flex-col">
+      <div class="pvis" style="background:${g}"><div class="mini">${esc(p.brand.slice(0,2))}</div>${img}</div>
+      <div class="p-4 flex-1 flex flex-col">
+        <div class="flex items-center gap-2 mb-2">
+          <span class="badge ${p.cond==='baru'?'b-new':'b-sec'}">${p.cond==='baru'?'Baru':'Second'}</span>
+          <span class="text-xs" style="color:var(--mut)">${esc(p.brand)}</span>
+        </div>
+        <h3 class="font-head font-bold text-lg leading-snug">${esc(p.name)}</h3>
+        <p class="text-sm mt-1 flex-1" style="color:var(--mut)">${esc(p.note)}</p>
+        <div class="mt-4">
+          <div class="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-2">
+            <div><div class="font-head font-extrabold text-xl">${rp(p.price)}</div>
+            <div class="text-xs ${p.stock<=2?'text-rose-300':''}" style="${p.stock<=2?'':'color:var(--mut)'}">${p.stock>0?'Stok '+p.stock:'Stok habis'}</div></div>
+            <button class="btn btn-main text-sm w-full sm:w-auto" data-act="add" data-id="${p.id}" ${out?'disabled':''}>${p.stock<=0?'Habis':'Tambah ke Keranjang'}</button>
+          </div>
+          <button class="btn btn-wa text-sm w-full mt-2" data-act="productWA" data-id="${p.id}">Tanya unit ini via WhatsApp</button>
+        </div>
+      </div></article>`;
+  }).join('') : '<p class="col-span-full text-center py-10" style="color:var(--mut)">Tidak ada HP yang cocok. Coba ubah kata kunci atau filter.</p>';
+  observeReveals($('#grid'));
+}
+function setCond(c){
+  filter.cond = c || '';
+  document.querySelectorAll('#fCond .chip').forEach(b => b.classList.toggle('on', b.dataset.cond === filter.cond));
+  renderCatalog();
+}
+function setHeaderSearch(open){
+  const box = $('#headerSearch'), button = box.querySelector('[data-act="searchToggle"]'), input = $('#headerSearchInput');
+  box.classList.toggle('open', open);
+  button.setAttribute('aria-expanded', String(open));
+  button.setAttribute('aria-label', open ? 'Tutup pencarian' : 'Buka pencarian');
+  if (open) input.focus();
+  else if (input.value) { input.value = ''; $('#fQ').value = ''; filter.q = ''; renderCatalog(); }
+}
+
+/* ===== KERANJANG ===== */
+function cartTotal(){ return cart.reduce((s, c) => { const p = products.find(x => x.id === c.id); return s + (p ? p.price * c.qty : 0); }, 0); }
+function renderCart(){
+  cart = cart.filter(c => products.find(p => p.id === c.id));
+  $('#cartCount').textContent = cart.reduce((s, c) => s + c.qty, 0);
+  $('#cartItems').innerHTML = cart.length ? cart.map(c => {
+    const p = products.find(x => x.id === c.id);
+    return `<div class="glass p-3 flex gap-3 items-center" style="border-radius:16px">
+      <div class="flex-1 min-w-0"><div class="font-semibold leading-snug">${esc(p.name)}</div>
+      <div class="text-sm" style="color:var(--mut)">${p.cond==='baru'?'Baru':'Second'} · ${rp(p.price)}</div></div>
+      <div class="flex items-center gap-2">
+        <button class="chip" data-act="dec" data-id="${p.id}" aria-label="Kurangi">−</button>
+        <span class="w-5 text-center font-semibold">${c.qty}</span>
+        <button class="chip" data-act="inc" data-id="${p.id}" aria-label="Tambah" ${c.qty>=p.stock?'disabled':''}>+</button>
+      </div></div>`;
+  }).join('') : '<p class="text-center py-10" style="color:var(--mut)">Keranjang masih kosong. Pilih HP dari katalog untuk memulai.</p>';
+  $('#cTotal').textContent = rp(cartTotal());
+  $('#btnCheckout').disabled = !cart.length;
+  save('konter_cart', cart);
+}
+function addToCart(id){
+  const p = products.find(x => x.id === id); if (!p) return;
+  const c = cart.find(x => x.id === id);
+  if ((c ? c.qty : 0) >= p.stock) return toast('Stok tidak mencukupi');
+  if (c) c.qty++; else cart.push({id, qty:1});
+  renderCart(); renderCatalog(); toast(`${p.name} masuk keranjang`);
+}
+function changeQty(id, d){
+  const c = cart.find(x => x.id === id), p = products.find(x => x.id === id); if (!c || !p) return;
+  c.qty = Math.min(p.stock, c.qty + d);
+  if (c.qty <= 0) cart = cart.filter(x => x.id !== id);
+  renderCart(); renderCatalog();
+}
+function setNavActive(key){
+  document.querySelectorAll('.bottom-link').forEach(link => link.classList.toggle('active', !!key && link.dataset.nav === key));
+}
+function toggleCart(open){
+  const d = $('#drawer'), o = $('#overlay');
+  if (typeof open !== 'boolean') open = d.classList.contains('translate-x-full');
+  d.classList.toggle('translate-x-full', !open);
+  o.classList.toggle('hidden', !open);
+  setNavActive(open ? 'cart' : '');
+}
+function checkout(){
+  if (!cart.length) return;
+  const name = $('#cName').value.trim(), method = $('#cMethod').value, addr = $('#cAddr').value.trim(), note = $('#cNote').value.trim();
+  if (!name) { $('#cName').focus(); return toast('Isi nama pemesan dulu'); }
+  if (method.startsWith('Antar') && !addr) { $('#cAddr').focus(); return toast('Alamat wajib diisi untuk pengantaran'); }
+  const lines = cart.map((c, i) => { const p = products.find(x => x.id === c.id);
+    return `${i+1}. ${p.name} (${p.cond==='baru'?'Baru':'Second'})\n    ${c.qty} x ${rp(p.price)} = ${rp(p.price*c.qty)}`; });
+  const msg = `*PESANAN BARU - ${STORE}*\n\nNama: ${name}\nMetode: ${method}${addr?'\nAlamat: '+addr:''}\n\n*Daftar pesanan:*\n${lines.join('\n')}\n\n*Total: ${rp(cartTotal())}*${note?'\nCatatan: '+note:''}\n\nMohon konfirmasi ketersediaan unit. Terima kasih.`;
+  cart.forEach(c => { const p = products.find(x => x.id === c.id); if (p) p.stock = Math.max(0, p.stock - c.qty); });
+  cart = []; persist(); renderCart(); renderCatalog(); toggleCart(false);
+  if (isAdmin) renderAdmin();
+  openWA(msg); toast('Pesanan disiapkan untuk WhatsApp');
+}
+
+/* ===== KALKULATOR SERVIS ===== */
+function renderCalc(){
+  $('#tier').innerHTML = TIERS.map(t => `<button class="chip ${t.k===tier?'on':''}" data-act="tier" data-k="${t.k}">${t.n}</button>`).join('');
+  $('#dmg').innerHTML = SERVICES.map(s => `<label class="dmg ${picked.has(s.k)?'on':''}">
+    <input type="checkbox" data-act="dmg" data-k="${s.k}" ${picked.has(s.k)?'checked':''}>
+    <span class="flex-1">${s.n}</span><span class="text-sm" style="color:var(--mut)">${rp(s.p*mult())}</span></label>`).join('');
+  const sel = SERVICES.filter(s => picked.has(s.k));
+  const total = sel.reduce((a, s) => a + s.p * mult(), 0);
+  $('#estimate').textContent = sel.length ? `${rp(total)} – ${rp(Math.ceil(total*1.2/1000)*1000)}` : 'Rp 0';
+  $('#estList').textContent = sel.length ? sel.map(s => s.n).join(', ') : 'Belum ada kerusakan dipilih.';
+}
+function updateLoan(){
+  const price = Math.max(0, +$('#loanPrice').value || 0), rate = +$('#loanProvider').value, months = +$('#loanTerm').value;
+  const monthly = months ? Math.ceil(price * (1 + rate * months) / months) : 0;
+  $('#loanResult').textContent = price ? `${rp(monthly)} / bulan` : 'Masukkan harga barang';
+  $('#loanNote').textContent = price ? `Total simulasi ${rp(monthly * months)} untuk ${months} bulan; belum termasuk biaya lain.` : '';
+}
+function estimateTradeIn(){
+  const model = $('#tradeModel').value.trim(), base = Math.max(0, +$('#tradeBase').value || 0);
+  if (!model || !base) { toast('Isi tipe HP dan harga pasar perkiraan'); return; }
+  const factor = ['#tradeScreen','#tradeBody','#tradeFunction','#tradeKit'].reduce((sum, selector) => sum * +$(selector).value, 1);
+  const low = Math.floor(base * factor * .8 / 10000) * 10000;
+  const high = Math.floor(base * factor * .9 / 10000) * 10000;
+  $('#tradeResult').innerHTML = `<strong class="block text-white">Kisaran taksiran: ${rp(low)} – ${rp(high)}</strong><span>Perhitungan awal berdasarkan data yang Anda isi. Nilai final setelah pemeriksaan fisik.</span><button class="btn btn-wa mt-3" data-act="tradeWA" data-model="${esc(model)}" data-low="${low}" data-high="${high}">Konfirmasi via WhatsApp</button>`;
+}
+function book(){
+  const name = $('#sName').value.trim(), model = $('#sModel').value.trim(), note = $('#sNote').value.trim();
+  const sel = SERVICES.filter(s => picked.has(s.k));
+  if (!sel.length) return toast('Pilih minimal satu jenis kerusakan');
+  if (!name || !model) return toast('Isi nama dan tipe HP');
+  const est = sel.reduce((a, s) => a + s.p * mult(), 0);
+  const nums = services.map(s => parseInt(String(s.id).replace(/\D/g, '')) || 1000);
+  const id = 'SV-' + (Math.max(1000, ...nums) + 1);
+  services.unshift({id, name, phone:$('#sPhone').value.trim(), model, items:sel.map(s => s.n), est, note, status:'Menunggu', date:new Date().toISOString()});
+  persist(); if (isAdmin) renderAdmin();
+  const msg = `*BOOKING SERVIS - ${STORE}*\n\nNo. servis: ${id}\nNama: ${name}\nTipe HP: ${model} (${TIERS.find(t => t.k===tier).n})\n\n*Kerusakan:*\n${sel.map(s => '- '+s.n).join('\n')}\n\nEstimasi: ${rp(est)} – ${rp(Math.ceil(est*1.2/1000)*1000)}${note?'\nKeluhan: '+note:''}\n\nSaya ingin menjadwalkan servis. Mohon info jadwal dan biaya pasti.`;
+  picked.clear(); ['#sName','#sModel','#sPhone','#sNote'].forEach(s => $(s).value = ''); renderCalc();
+  toast(`Booking ${id} dibuat. Simpan nomor ini untuk cek status.`);
+  openWA(msg);
+}
+function track(){
+  const id = $('#trackId').value.trim().toUpperCase();
+  const s = services.find(x => String(x.id).toUpperCase() === id);
+  $('#trackRes').innerHTML = !id ? '' : s
+    ? `<div class="rounded-xl p-3 bg-white/10 border border-white/15"><div class="font-semibold">${esc(s.model)} · ${esc(s.id)}</div><div class="mt-1">Status: <span class="badge b-new">${esc(s.status)}</span></div><div class="mt-1" style="color:var(--mut)">${esc(s.items.join(', '))}</div></div>`
+    : '<span class="text-rose-300">Nomor servis tidak ditemukan. Periksa kembali penulisannya.</span>';
+}
+
+/* ===== ADMIN ===== */
+function openAdmin(){ $('#admin').classList.remove('hidden'); renderAdmin(); $('#admin').scrollIntoView(); }
+function renderAdmin(){
+  $('#btnReset').classList.toggle('hidden', !isAdmin);
+  if (!isAdmin) {
+    $('#adminBody').innerHTML = `<div class="glass max-w-sm p-5">
+      <label class="font-semibold" for="pin">Masukkan PIN admin</label>
+      <input id="pin" type="password" inputmode="numeric" class="inp mt-2" placeholder="PIN">
+      <button class="btn btn-main w-full mt-3" data-act="login">Masuk</button></div>`;
+    return;
+  }
+  const opt = (a, v) => a.map(x => `<option ${x===v?'selected':''}>${x}</option>`).join('');
+  $('#adminBody').innerHTML = `
+  <div class="grid lg:grid-cols-3 gap-6">
+    <form id="addForm" class="glass p-5 space-y-3 h-fit">
+      <h3 class="font-head font-bold text-xl">Tambah stok HP</h3>
+      <input name="name" class="inp" placeholder="Nama & varian (mis. Realme C55 6/128)" required>
+      <input name="brand" class="inp" placeholder="Merek" required>
+      <select name="cond" class="inp"><option value="baru">Baru</option><option value="second">Second</option></select>
+      <div class="grid grid-cols-2 gap-2">
+        <input name="price" type="number" min="0" class="inp" placeholder="Harga (Rp)" required>
+        <input name="stock" type="number" min="1" class="inp" placeholder="Jumlah stok" required>
+      </div>
+      <input name="note" class="inp" placeholder="Keterangan (kondisi, garansi, dll)">
+      <input name="img" class="inp" placeholder="URL foto (opsional)">
+      <button class="btn btn-main w-full">Simpan ke katalog</button>
+    </form>
+    <div class="lg:col-span-2 glass p-5 overflow-x-auto">
+      <h3 class="font-head font-bold text-xl mb-2">Stok produk (${products.length})</h3>
+      <table class="tbl"><thead><tr><th>Produk</th><th>Kondisi</th><th>Harga</th><th>Stok</th><th></th></tr></thead><tbody>
+      ${products.map(p => `<tr><td>${esc(p.name)}</td><td>${p.cond}</td>
+        <td><input type="number" min="0" class="inp" style="width:7.5rem;padding:.35rem .6rem" value="${p.price}" data-act="price" data-id="${p.id}" aria-label="Harga ${esc(p.name)}"></td>
+        <td><input type="number" min="0" class="inp" style="width:5rem;padding:.35rem .6rem" value="${p.stock}" data-act="stock" data-id="${p.id}" aria-label="Stok ${esc(p.name)}"></td>
+        <td><button class="text-rose-300 font-semibold" data-act="delP" data-id="${p.id}">Hapus</button></td></tr>`).join('')}
+      </tbody></table>
+    </div>
+  </div>
+  <div class="glass p-5 mt-6 overflow-x-auto">
+    <h3 class="font-head font-bold text-xl mb-2">Servis pelanggan (${services.length})</h3>
+    ${services.length ? `<table class="tbl"><thead><tr><th>No.</th><th>Pelanggan</th><th>HP</th><th>Kerusakan</th><th>Estimasi</th><th>Status</th><th></th></tr></thead><tbody>
+    ${services.map(s => `<tr><td class="font-semibold">${esc(s.id)}</td><td>${esc(s.name)}${s.phone?`<div class="text-xs" style="color:var(--mut)">${esc(s.phone)}</div>`:''}</td><td>${esc(s.model)}</td>
+      <td>${esc(s.items.join(', '))}</td><td>${rp(s.est)}</td>
+      <td><select class="inp" style="padding:.35rem .6rem" data-act="status" data-id="${esc(s.id)}" aria-label="Status ${esc(s.id)}">${opt(STATUSES, s.status)}</select></td>
+      <td><button class="text-rose-300 font-semibold" data-act="delS" data-id="${esc(s.id)}">Hapus</button></td></tr>`).join('')}
+    </tbody></table>` : '<p style="color:var(--mut)">Belum ada booking servis.</p>'}
+  </div>
+  <button class="btn btn-glass mt-4" data-act="logout">Keluar dari admin</button>`;
+  $('#addForm').addEventListener('submit', e => {
+    e.preventDefault();
+    const f = Object.fromEntries(new FormData(e.target));
+    products.unshift({id:'p'+Date.now(), name:f.name.trim(), brand:f.brand.trim(), cond:f.cond, price:+f.price||0, stock:+f.stock||0, note:(f.note||'').trim(), img:(f.img||'').trim()});
+    persist(); renderBrands(); renderCatalog(); renderAdmin(); toast('Produk ditambahkan ke katalog');
+  });
+}
+
+/* ===== EVENT HANDLING ===== */
+document.addEventListener('click', e => {
+  const el = e.target.closest('[data-act],#fCond .chip'); if (!el) return;
+  if (!el.dataset.act) return setCond(el.dataset.cond);
+  const id = el.dataset.id;
+  switch (el.dataset.act) {
+    case 'goto': setCond(el.dataset.cond); setNavActive(el.dataset.nav); break;
+    case 'nav': setNavActive(el.dataset.nav); break;
+    case 'searchToggle': setHeaderSearch(!$('#headerSearch').classList.contains('open')); break;
+    case 'cart': toggleCart(); break;
+    case 'add': addToCart(id); break;
+    case 'productWA': {
+      const p = products.find(x => x.id === id);
+      if (p) openWA(`Halo admin, apakah ${p.name} (${p.cond==='baru'?'baru':'second'}) masih ready? Mohon info stok, kondisi, dan garansinya.`);
+      break;
+    }
+    case 'inc': changeQty(id, 1); break;
+    case 'dec': changeQty(id, -1); break;
+    case 'checkout': checkout(); break;
+    case 'tier': tier = +el.dataset.k; renderCalc(); break;
+    case 'book': book(); break;
+    case 'serviceQuestion': {
+      const sel = SERVICES.filter(s => picked.has(s.k));
+      if (!sel.length) { toast('Pilih jenis kerusakan untuk menyiapkan pesan'); break; }
+      const model = $('#sModel').value.trim() || 'tipe HP belum disebutkan';
+      const total = sel.reduce((sum, s) => sum + s.p * mult(), 0);
+      openWA(`Halo admin, saya ingin bertanya tentang estimasi servis untuk ${model}. Kerusakan: ${sel.map(s => s.n).join(', ')}. Estimasi awal ${rp(total)} – ${rp(Math.ceil(total*1.2/1000)*1000)}. Apakah bisa dibantu konfirmasi?`);
+      break;
+    }
+    case 'tradeEstimate': estimateTradeIn(); break;
+    case 'tradeWA': openWA(`Halo admin, saya ingin konfirmasi trade-in ${el.dataset.model}. Kisaran simulasi: ${rp(el.dataset.low)} – ${rp(el.dataset.high)}. Mohon info pemeriksaan unit.`); break;
+    case 'digitalOrder': {
+      const target = $('#digitalTarget').value.trim(), amount = $('#digitalAmount').value.trim();
+      if (!target || !amount) { toast('Isi nominal dan nomor tujuan / ID pelanggan'); break; }
+      openWA(`Halo admin, saya ingin pesan ${$('#digitalType').value} nominal ${amount} untuk nomor / ID ${target}. Mohon konfirmasi harga dan metode pembayaran.`);
+      break;
+    }
+    case 'billCheck': {
+      const target = $('#billTarget').value.trim();
+      if (!target) { toast('Isi nomor HP atau ID pelanggan'); break; }
+      openWA(`Halo admin, mohon bantu cek ${$('#billType').value.toLowerCase()} untuk nomor / ID ${target}.`);
+      break;
+    }
+    case 'reviewWA': openWA(`Halo ${STORE}, saya ingin mengirim ulasan/foto pengalaman berbelanja. Saya sudah memastikan informasi pribadi pada foto disamarkan.`); break;
+    case 'track': track(); break;
+    case 'preview': openModal(`<button type="button" class="absolute top-3 right-3 z-10 p-2 rounded-lg bg-black/50 hover:bg-black/75" data-act="mClose" aria-label="Tutup foto">✕</button>
+      <img src="${esc(el.dataset.src)}" alt="Foto ${esc(el.dataset.name)}" class="block mx-auto max-w-full object-contain" style="max-height:82vh">`, true); break;
+    case 'warranty': openModal(`<h3 class="font-head font-bold text-xl">Garansi toko 7 hari</h3>
+      <p class="text-sm mt-3" style="color:var(--mut)">Garansi toko berlaku sesuai keterangan pada masing-masing unit. Periksa catatan produk di katalog dan konfirmasikan cakupan garansi kepada admin sebelum membeli.</p>
+      <div class="flex justify-end mt-5"><button class="btn btn-glass" data-act="mClose">Tutup</button></div>`); break;
+    case 'quickWA': openWA(`Halo ${STORE}, saya ingin bertanya tentang produk atau layanan yang tersedia.`); break;
+    case 'admin': openAdmin(); break;
+    case 'closeAdmin': $('#admin').classList.add('hidden'); break;
+    case 'mClose': closeModal(); break;
+    case 'mYes': { const f = pendingYes; closeModal(); if (f) f(); break; }
+    case 'copyMsg':
+      try { navigator.clipboard.writeText(lastMsg).then(() => toast('Pesan disalin'), () => toast('Salin manual dari kotak teks')); }
+      catch (err) { toast('Salin manual dari kotak teks'); }
+      break;
+    case 'login':
+      if ($('#pin').value === ADMIN_PIN) { isAdmin = true; try { sessionStorage.setItem('konter_admin','1'); } catch (err) {} renderAdmin(); toast('Masuk sebagai admin'); }
+      else toast('PIN salah');
+      break;
+    case 'logout': isAdmin = false; try { sessionStorage.removeItem('konter_admin'); } catch (err) {} renderAdmin(); break;
+    case 'delP': ask('Hapus produk ini dari katalog?', () => { products = products.filter(p => p.id !== id); persist(); renderBrands(); renderCatalog(); renderCart(); renderAdmin(); toast('Produk dihapus'); }); break;
+    case 'delS': ask('Hapus data servis ini?', () => { services = services.filter(s => s.id !== id); persist(); renderAdmin(); toast('Data servis dihapus'); }); break;
+    case 'resetData': ask('Kembalikan semua data ke contoh awal? Perubahan Anda akan hilang.', () => { products = clone(SEED_PRODUCTS); services = clone(SEED_SERVICES); cart = []; persist(); renderBrands(); renderCatalog(); renderCart(); renderAdmin(); toast('Data dikembalikan ke contoh'); }); break;
+  }
+});
+document.addEventListener('change', e => {
+  const el = e.target, id = el.dataset.id, act = el.dataset.act;
+  if (act === 'dmg') { if (el.checked) picked.add(el.dataset.k); else picked.delete(el.dataset.k); renderCalc(); }
+  if (act === 'status') { const s = services.find(x => x.id === id); if (s) { s.status = el.value; persist(); toast(`Status ${id}: ${el.value}`); } }
+  if (act === 'stock') { const p = products.find(x => x.id === id); if (p) { p.stock = Math.max(0, +el.value || 0); persist(); renderCatalog(); renderCart(); } }
+  if (act === 'price') { const p = products.find(x => x.id === id); if (p) { p.price = Math.max(0, +el.value || 0); persist(); renderCatalog(); renderCart(); } }
+});
+$('#fQ').addEventListener('input', e => { filter.q = e.target.value; renderCatalog(); });
+$('#headerSearchInput').addEventListener('input', e => { $('#fQ').value = e.target.value; filter.q = e.target.value; renderCatalog(); });
+$('#headerSearchInput').addEventListener('keydown', e => {
+  if (e.key === 'Enter') { $('#katalog').scrollIntoView({behavior:'smooth'}); e.target.blur(); }
+});
+$('#fBrand').addEventListener('change', e => { filter.brand = e.target.value; renderCatalog(); });
+['loanPrice','loanProvider','loanTerm'].forEach(id => {
+  $('#'+id).addEventListener('input', updateLoan);
+  $('#'+id).addEventListener('change', updateLoan);
+});
+$('#cMethod').addEventListener('change', e => $('#cAddr').classList.toggle('hidden', !e.target.value.startsWith('Antar')));
+$('#trackId').addEventListener('keydown', e => { if (e.key === 'Enter') track(); });
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') {
+    toggleCart(false); closeModal();
+    if ($('#headerSearch').classList.contains('open')) setHeaderSearch(false);
+  }
+  if (e.key === 'Enter' && e.target.id === 'pin') { const b = document.querySelector('[data-act="login"]'); if (b) b.click(); }
+});
+window.addEventListener('hashchange', () => { if (location.hash === '#admin') openAdmin(); });
+window.addEventListener('error', e => toast('Terjadi kesalahan: ' + e.message));
+
+/* ===== INIT ===== */
+renderBrands(); renderCatalog(); renderCart(); renderCalc(); updateLoan();
+setupScrollReveal();
+if (location.hash === '#admin') openAdmin();
+</script>
+</body>
+</html>
